@@ -27,7 +27,7 @@ jobs:
 
       - name: Bash syntax check
         run: |
-          for f in scripts/bash/*.sh; do bash -n "$f"; done
+          for f in $(find . -name '*.sh' -not -path './.git/*'); do bash -n "$f"; done
 
       - name: Python tests
         run: pytest -q

@@ -7,9 +7,13 @@ help:  ## Show available targets
 test:  ## Run the Python test suite
 	pytest -q
 
-check-scripts:  ## Syntax-check every bash script
-	@for f in scripts/bash/*.sh; do echo "checking $$f"; bash -n "$$f"; done
+check-scripts:  ## Syntax-check every bash script in the repo
+	@for f in $$(find . -name '*.sh' -not -path './.git/*'); do \
+		echo "checking $$f"; bash -n "$$f"; \
+	done
 
 chmodx:  ## Make all bash scripts executable (set the +x bit in git)
-	@for f in scripts/bash/*.sh; do git update-index --chmod=+x "$$f" 2>/dev/null || true; done
+	@for f in $$(find . -name '*.sh' -not -path './.git/*'); do \
+		git update-index --chmod=+x "$$f" 2>/dev/null || true; \
+	done
 	@echo "done."
