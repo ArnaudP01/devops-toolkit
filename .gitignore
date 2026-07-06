@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local artifacts
+*.tar.gz
+*.db
+.env
+.env.*
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
