@@ -18,9 +18,12 @@ tar -czf "$archive" -C "$(dirname "$src")" "$name"
 echo "created: $archive ($(du -h "$archive" | cut -f1))"
 
 # Retention: keep only the newest $keep archives for this source.
-ls -1t "$dest/${name}-"*.tar.gz 2>/dev/null | tail -n +$((keep + 1)) | while read -r old; do
-  rm -f "$old"
-  echo "pruned:  $old"
+# The timestamp in the name sorts chronologically, so the glob order is oldest first.
+archives=("$dest/${name}-"*.tar.gz)
+excess=$(( ${#archives[@]} - keep ))
+for (( i = 0; i < excess; i++ )); do
+  rm -f "${archives[$i]}"
+  echo "pruned:  ${archives[$i]}"
 done
 
 echo "retention: keeping last $keep archive(s)."

@@ -1,4 +1,4 @@
-.PHONY: help test check-scripts chmodx
+.PHONY: help test lint check-scripts chmodx
 
 help:  ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -6,6 +6,10 @@ help:  ## Show available targets
 
 test:  ## Run the Python test suite
 	pytest -q
+
+lint:  ## Lint Python (ruff) and bash (shellcheck), as CI does
+	ruff check .
+	find . -name '*.sh' -not -path './.git/*' -print0 | xargs -0 shellcheck
 
 check-scripts:  ## Syntax-check every bash script in the repo
 	@for f in $$(find . -name '*.sh' -not -path './.git/*'); do \
