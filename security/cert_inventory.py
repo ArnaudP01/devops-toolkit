@@ -89,7 +89,7 @@ def _decode_der(der: bytes) -> dict:
     try:
         with os.fdopen(fd, "w") as fh:
             fh.write(ssl.DER_cert_to_PEM_cert(der))
-        return ssl._ssl._test_decode_cert(path)  # noqa: SLF001 - stable private helper
+        return ssl._ssl._test_decode_cert(path)  # stable private helper
     finally:
         os.unlink(path)
 
@@ -100,9 +100,9 @@ def inspect(host: str, port: int, timeout: float = 8.0, now: float | None = None
     try:
         ctx = ssl.create_default_context()
         ctx.check_hostname = False  # we check names ourselves, to report rather than abort
-        with socket.create_connection((host, port), timeout) as sock:
-            with ctx.wrap_socket(sock, server_hostname=host) as tls:
-                cert = tls.getpeercert()
+        with socket.create_connection((host, port), timeout) as sock, \
+                ctx.wrap_socket(sock, server_hostname=host) as tls:
+            cert = tls.getpeercert()
         info.trusted = True
     except ssl.SSLCertVerificationError as exc:
         info.trusted = False
@@ -110,9 +110,9 @@ def inspect(host: str, port: int, timeout: float = 8.0, now: float | None = None
         try:
             ctx = ssl.create_default_context()
             ctx.check_hostname, ctx.verify_mode = False, ssl.CERT_NONE
-            with socket.create_connection((host, port), timeout) as sock:
-                with ctx.wrap_socket(sock, server_hostname=host) as tls:
-                    cert = _decode_der(tls.getpeercert(binary_form=True))
+            with socket.create_connection((host, port), timeout) as sock, \
+                    ctx.wrap_socket(sock, server_hostname=host) as tls:
+                cert = _decode_der(tls.getpeercert(binary_form=True))
         except (OSError, ValueError, AttributeError) as exc2:
             info.error += f"; could not read certificate: {exc2}"
             return info

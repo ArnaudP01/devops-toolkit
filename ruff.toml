@@ -1,0 +1,13 @@
+# Explicit rule set so local runs and CI agree, whatever ruff's defaults become.
+target-version = "py310"
+line-length = 120
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "B",   # bugbear: likely bugs
+    "I",   # import order
+    "SIM", # simplifications
+]

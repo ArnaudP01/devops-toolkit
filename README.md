@@ -4,11 +4,11 @@
 > **Organized by use case, not by language** — open the folder that matches what you're trying to do.
 
 [![CI](https://github.com/ArnaudP01/devops-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/ArnaudP01/devops-toolkit/actions/workflows/ci.yml)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Each script is **self-contained**, documented at the top, and safe to read before running.
-Bash scripts target Linux/macOS; the Python scripts run anywhere Python 3.9+ does (stdlib only).
+Bash scripts target Linux/macOS; the Python scripts run anywhere Python 3.10+ does (stdlib only).
 
 ---
 
@@ -104,7 +104,7 @@ Every Python script supports `--help`; every bash script documents its usage in 
   decoding against hand-built packets, SPF/DMARC/DKIM rules, malware-indicator detection,
   certificate name matching, migration diffing and file-integrity manifests.
 - **Python code** is linted with **ruff**; **bash scripts** with **shellcheck** and `bash -n`.
-- Everything runs on **GitHub Actions**: a lint job, then tests across Python 3.9 → 3.12.
+- Everything runs on **GitHub Actions**: a lint job, then tests across Python 3.10 → 3.13.
 
 ```bash
 make help           # list targets
